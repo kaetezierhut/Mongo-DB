@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../partials/head') %>
+    </head>
+    <body>
+        <header>
+            <%- include('../partials/header') %>
+        </header>
+        <main class="flex-space">
+            <table>
+                <% buildingdetails.forEach(function(building) 
+                { %>
+                    <th>
+                        <h3>Project ID</h3>
+                    </th>
+                    <th>
+                        <h3>Description</h3>
+                    </th>
+                    
+                    <th>
+                        <h3>Structures in need of repair</h3>
+                    </th>
+                    <th>
+                        <h3>Add the Structures</h3>
+                    </th>
+                    <th>
+                        <h3>IOT</h3>
+                    </th>
+
+                    <!-- you need to create a function to show the status of project-->
+                    <th>
+                        <h3>Status (End or in progress)</h3>
+                    </th>
+
+                    <!-- you need to create a function to print the report of project in PDF-->
+                    <th>
+                        <h3>Report in PDF</h3>
+                    </th>
+
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>
+                                    <%= building.name %>
+                                </p>
+                            </td>
+
+                            <td>
+                                <p>
+                                    <%= building.adress %>
+                                </p>
+                            </td>
+                            
+                            <td>
+                            <form id="ShowWall_Roof">
+                                <button><a href="/attributelistdata/<%= building._id %>">Show</a></button>
+                            </form>
+                            </td>
+                            
+                            <td>
+                            <form id="EditWall_Roof">
+                                <button><a href="/attribute/<%= building._id %>">Add</a></button>
+                            </form>
+                            </td>
+                            
+                            <td>
+
+                            <form id="IOT">
+                                <button><a href="/embedDemo/SensorWeb/Web/templates/SensorWeb.html?_ijt=665obtpbsvn3kimngpul0qukgu&_ij_reload=RELOAD_ON_SAVE">IOT</a></button>
+                            </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <% }); 
+                    %>
+            </table>
+        </main>
+    </body>
+</html>

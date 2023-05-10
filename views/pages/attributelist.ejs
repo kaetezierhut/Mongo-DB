@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head') %>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <header>
+        <%- include('../partials/header') %>
+    </header>
+
+    <main class="flex-space">
+
+        <h2>The scraped building constructions</h2>
+        <table>
+            <th>
+                <h3>Category</h3>
+            </th>
+            <th>
+                <h3>ID of Material</h3>
+            </th>
+            <th>
+                <h3>Area</h3>
+            </th>
+            <!--<th>
+                <h3>total Materials</h3>
+            </th>-->
+            <% buildingdetails.attribute.forEach(function(item)		
+			//why do we use buildingdetails.attribute, because of hierarchy: building->buildingcollection->buildingdetails: id, adress, attribute->attribute->name, info, result
+				
+				{ %>
+                <tbody>
+                    <tr>
+
+                        <td>
+                            <p>
+                                <%= item.Category %>
+                            </p>
+                        </td>
+                        <!--<td>
+                            <p>
+                                <%= item.info %>
+                            </p>
+                        </td>-->
+                        <td>
+                            <p>
+                                <%= item.Type %>
+                            </p>
+                        </td>
+                        <td>
+                            <p>
+
+                                <%= item.Area %>
+                            </p>
+                        </td>
+
+                    </tr>
+                </tbody>
+                <% }); 
+			%>
+			</table>
+            <table id="materials">
+                <th>
+                    <h3>Material</h3>
+                </th>
+                <th>
+                    <h3>Quantity (kg)</h3>
+                </th>
+                <% Object.entries(materialDetails).forEach(([k,v]) =>
+                    { %>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>
+                                    <%= k %>
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    <%= v %>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <% }); 
+                %>
+                </table>
+        <h4>show pie chart of this project hier</h4>
+        <canvas id="myChart"></canvas>
+        <script>
+            const ctx = document.getElementById('myChart')
+            let materialDetails = '<%- JSON.stringify(materialDetails) %>'
+            materialDetails = JSON.parse(materialDetails)
+            new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(materialDetails),
+                datasets: [{data: Object.values(materialDetails)}]
+            }
+            });
+        </script>
+    </main>    
+</body>
+</html>

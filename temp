@@ -1,0 +1,19 @@
+                <!--<% materialDetails.forEach(([k,v]) =>
+                    { %>
+                    <tbody>
+                        <tr>
+    
+                            <td>
+                                <p>
+                                    <%= k %>
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    <%= v %>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <% }); 
+                %>-->

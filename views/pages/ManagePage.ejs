@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head') %>
+</head>
+
+<body>
+    <header>
+        <%- include('../partials/header') %>
+    </header>
+
+    <main class="flex-space">
+        
+        <form id="addbuilding" action="/add" method="post">
+			
+            <input type="text" name="name" placeholder="Project ID">
+			
+			<input type="text" name="adress" placeholder="Description">
+			
+			<button type="submit" value="Add"> Add</button>
+			
+        </form>
+
+        
+        <form id="deletebuilding" action="/delete" method="post">
+            <input type="text" name="name" placeholder="Project ID">
+            <button type="submit" value="Delete">
+                Delete
+            </button>
+        </form>
+
+
+        <form id="editbuilding" action="/edit" method="post">
+            <input type="text" name="editname" placeholder="Old ID">
+            <input type="text" name="newname" placeholder="New ID">
+            <button type="submit" value="Edit">
+                Edit
+            </button>
+        </form>
+
+        
+    </main>
+
+
+</body>
+</html>

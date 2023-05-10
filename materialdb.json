@@ -1,0 +1,236 @@
+[
+  {
+    "_id": {
+      "$oid": "63ec065d51178d450fea0512"
+    },
+    "Type": "320_Stampfbeton1949_MLS",
+    "Info": {
+      "Density": [
+        "2300"
+      ],
+      "Material": [
+        "Beton_BM"
+      ],
+      "Thickness": [
+        "0.3"
+      ]
+    },
+    "Element": "Fundament"
+  },
+  {
+    "_id": {
+      "$oid": "6424136af4dfc5aa9e250a51"
+    },
+    "Type": "320_Naturstein1949_MLS",
+    "Info": {
+      "Density": [
+        "2600",
+        "1800"
+      ],
+      "Material": [
+        "Naturstein_BM",
+        "KalkZemMörtel_BM"
+      ],
+      "Thickness": [
+        "0.24",
+        "0.06"
+      ]
+    },
+    "Element": "Fundament"
+  },
+  {
+    "_id": {
+      "$oid": "6425e933010091bbdff79591"
+    },
+    "Type": "340_Holzwand_Fachwerk1949_MLS",
+    "Info": {
+      "Density": [
+        "1600",
+        "670",
+        "1650"
+      ],
+      "Material": [
+        "PutzNN_BM",
+        "Laubholz_BM",
+        "Ziegel_BM"
+      ],
+      "Thickness": [
+        "0.42",
+        "0.049",
+        "0.091"
+      ]
+    },
+    "Element": "Innenwand"
+  },
+  {
+    "_id": {
+      "$oid": "6425ec4b010091bbdff79592"
+    },
+    "Type": "340_MW_Leichtbeton1995_MLS",
+    "Info": {
+      "Density": [
+        "1050",
+        "1400",
+        "1600"
+      ],
+      "Material": [
+        "PutzGips_BM",
+        "Leichtbeton_BM",
+        "MörtelNN_BM"
+      ],
+      "Thickness": [
+        "0.02",
+        "0.2574",
+        "0.0026"
+      ]
+    },
+    "Element": "Innenwand"
+  },
+  {
+    "_id": {
+      "$oid": "6425ef8d010091bbdff79593"
+    },
+    "Type": "330_MW_Ziegel1948_MLS",
+    "Info": {
+      "Density": [
+        "1050",
+        "1650",
+        "1800"
+      ],
+      "Material": [
+        "PutzGips_BM",
+        "Ziegel_BM",
+        "KalkZemMörtel_BM"
+      ],
+      "Thickness": [
+        "0.01",
+        "0.3116",
+        "0.0834"
+      ]
+    },
+    "Element": "Aussenwand"
+  },
+  {
+    "_id": {
+      "$oid": "6425f233010091bbdff79594"
+    },
+    "Type": "330_MW_Naturstein1948_MLS",
+    "Info": {
+      "Density": [
+        "1050",
+        "2600",
+        "1600",
+        "1800"
+      ],
+      "Material": [
+        "PutzGips_BM",
+        "Naturstein_BM",
+        "MörtelNN_BM",
+        "KalkZemMörtel_BM"
+      ],
+      "Thickness": [
+        "0.01",
+        "0.48",
+        "0.12",
+        "0.015"
+      ]
+    },
+    "Element": "Aussenwand"
+  },
+  {
+    "_id": {
+      "$oid": "6425f3fc010091bbdff79595"
+    },
+    "Type": "350_Beton1949_MLS",
+    "Info": {
+      "Density": [
+        "1600",
+        "2300"
+      ],
+      "Material": [
+        "EstrichNN_BM",
+        "Beton_BM"
+      ],
+      "Thickness": [
+        "0.06",
+        "0.125"
+      ]
+    },
+    "Element": "Decke"
+  },
+  {
+    "_id": {
+      "$oid": "6425f5a6010091bbdff79596"
+    },
+    "Type": "320_StahlbetonBodenplatte1979_MLS",
+    "Info": {
+      "Density": [
+        "1600",
+        "162",
+        "2300",
+        "1050"
+      ],
+      "Material": [
+        "EstrichNN_BM",
+        "DämmNN_BM",
+        "Beton_BM",
+        "PutzGips_BM"
+      ],
+      "Thickness": [
+        "0.04",
+        "0.03",
+        "0.15",
+        "0.01"
+      ]
+    },
+    "Element": "Decke"
+  },
+  {
+    "_id": {
+      "$oid": "6425f6b3010091bbdff79597"
+    },
+    "Type": "360_SteildachHolz1949_MLS",
+    "Info": {
+      "Density": [
+        "1650",
+        "470"
+      ],
+      "Material": [
+        "Ziegel_BM",
+        "Nadelholz_BM"
+      ],
+      "Thickness": [
+        "0.0108",
+        "0.03575"
+      ]
+    },
+    "Element": "Dach"
+  },
+  {
+    "_id": {
+      "$oid": "6425f82c010091bbdff79598"
+    },
+    "Type": "360_FlachdachBeton1979_MLS",
+    "Info": {
+      "Density": [
+        "1500",
+        "935",
+        "162",
+        "2300"
+      ],
+      "Material": [
+        "Kies_BM",
+        "FolieKunst_BM",
+        "DämmNN_BM",
+        "Beton_BM"
+      ],
+      "Thickness": [
+        "0.03",
+        "0.002",
+        "0.05",
+        "0.16"
+      ]
+    },
+    "Element": "Dach"
+  }
+]

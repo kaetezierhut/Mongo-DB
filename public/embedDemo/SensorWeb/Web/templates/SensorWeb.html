@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,shrink-to-fit=no">
+
+    <link href="..\static\css\bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="..\static\css\rawdatastyle.css">
+
+    <link rel="stylesheet" href="..\static\css\vendors.css">
+    <style>
+        body {
+            --color-text: #0f070a;
+            --color-bg: #fabd69;
+            --color-bg-2: #f98e4a;
+            --color-link: #317bd0;
+            --color-link-hover: #317bd0;
+            background: radial-gradient( ellipse at 100% 0, #fed96f 0, var(--color-bg) 50%, var(--color-bg-2) 115%);
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <div class="overlay"></div>
+    <main role="main" class="container">
+        <script type="text/javascript" src="..\static\js\originaljsforanalysis.js"></script>
+
+        <script type="text/javascript" src="..\static\js\jquery.min.js"></script>
+
+        <div id="container" style="background-color: white;width:1200px; height:600px; top: 5%; left: 0;right: 0;bottom: 0;margin:auto;opacity: 0.8;"></div>
+        
+		<script>
+            var dom = document.getElementById("container");
+            var myChart = echarts.init(dom);
+            var app = {};
+            var option;
+
+            var data = [];
+            var now = +new Date();
+            var oneDay = 1000;
+            var value = 0;
+            for (var i = 0; i < 60; i++) {
+                data.push(randomData(value));
+            }
+
+            option = {
+                title: {
+                    text: "sensor parameter",
+                },
+                tooltip: {
+                    trigger: "axis",
+                    axisPointer: {
+                        animation: false,
+                    },
+                },
+                xAxis: {
+                    type: "time",
+                    splitLine: {
+                        show: false,
+                    },
+                },
+                yAxis: {
+                    type: "value",
+                    boundaryGap: [0, "100%"],
+                    splitLine: {
+                        show: false,
+                    },
+                },
+                dataZoom: [{
+                    type: "inside",
+                    start: 0,
+                    end: 100,
+                }, {
+                    start: 0,
+                    end: 50,
+                    handleIcon: "M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z",
+                    handleSize: "80%",
+                    handleStyle: {
+                        color: "#eee",
+                        shadowBlur: 5,
+                        shadowColor: "rgba(0, 0, 0, 0.6)",
+                        shadowOffsetX: 2,
+                        shadowOffsetY: 2,
+                    },
+                }, {
+                    orient: "vertical",
+                    start: 0,
+                    end: 50,
+                    handleIcon: "M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z",
+                    handleSize: "80%",
+                    handleStyle: {
+                        color: "#eee",
+                        shadowBlur: 5,
+                        shadowColor: "rgba(0, 0, 0, 0.6)",
+                        shadowOffsetX: 2,
+                        shadowOffsetY: 2,
+                    },
+                }, ],
+                series: [{
+                    name: "Data analysis",
+                    type: "line",
+                    showSymbol: false,
+                    hoverAnimation: false,
+                    data: data,
+                }, ],
+            };
+
+            function freshdata() {
+                for (var i = 0; i < 1; i++) {
+                    data.shift();
+                    data.push(randomData(value));
+                }
+
+                myChart.setOption({
+                    series: [{
+                        data: data,
+                    }, ],
+                });
+            }
+
+            function randomData(value) {
+                now = new Date(+now + oneDay);
+                value1 = value;
+                return {
+                    name: now.toString(),
+                    value: [
+                        [now.getFullYear(), now.getMonth() + 1, now.getDate()].join("/") +
+                        " " + [now.getHours(), now.getMinutes(), now.getSeconds()].join(":"),
+                        Math.round(value1 * 100) / 100,
+                    ],
+                };
+            }
+
+            if (option && typeof option === "object") {
+                myChart.setOption(option);
+            }
+        </script>
+		
+		<!--this code is most important-->
+        <script>
+            var app = {
+                newdatas: [],
+            };
+
+            $(function() {
+                setInterval(function() {
+                    loadsendordata()
+                }, 1000)
+
+                function loadsendordata() {
+                    $.ajax({
+                        url: "http://127.0.0.1:3007/api/temupdatesensordata",
+                        type: "GET",
+                        success: function(res) {
+                            value = res.data[0].temperatur;
+                            freshdata();
+                        }
+
+                    });
+
+                }
+            });
+        </script>
+    </main>
+
+
+    <script type="text/javascript" src="..\static\js\vendors.js"></script>
+    <script type="text/javascript" src="..\static\js\base2.js"></script>
+
+    <script src="..\static\js\popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="..\static\js\bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
+
+
+
+</body>
+
+</html>
