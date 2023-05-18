@@ -52,15 +52,15 @@ app.get('/homepage', function(req, res) {
 // get attribute route to get attribute.ejs page
 app.get('/attribute/:id', async function(req, res) {
     const id = req.params.id;
-    let checkversion = await db.collection('checkversion').find({ name: "checkthelock" }).toArray();
+    let checkversion = await db.collection('checkversion').find({ name: "checkthelock", id: id }).toArray()
     // no lock at all
     if (checkversion.length == 0) {
-        let data = { "name": "checkthelock", "status": 0 }
-            //create lock
+        let data = { "name": "checkthelock", "status": 1, "id": id }
+        //create lock
         await db.collection('checkversion').insertOne(data)
-            // Find data in buildingCollection collection
+        // Find data in buildingCollection collection
         db.collection('buildingCollection').find({ _id: ObjectId(id) }).toArray(function(err, result) {
-            // Show edit wall&roof page
+        // Show edit wall&roof page
             res.render('pages/attribute.ejs', {
                 buildingdetails: result
             });
@@ -68,22 +68,10 @@ app.get('/attribute/:id', async function(req, res) {
 
     } else {
         //checklock status
-        // locked
-        /*if (checkversion[0].status == 1) {
-           res.render('pages/warning');*/
-        //} else {
-            //add lock
-            // await db.collection('checkversion').findOneAndUpdate({ name: "checkthelock" }, { $set: { status: 1 } })
-            await db.collection('checkversion').findOneAndUpdate({ name: "checkthelock" }, { $set: { status: 0 } })
-                // Find data in books collection
-            db.collection('buildingCollection').find({ _id: ObjectId(id) }).toArray(function(err, result) {
-                // Turn array into a JSON string for logging
-                // Show books page
-                res.render('pages/attribute', {
-                    buildingdetails: result
-                });
-            });
-        //}
+        //locked
+        if (checkversion[0].status == 1 && checkversion[0].id == id) {
+           res.render('pages/warning')
+        } 
     }
 });
 
@@ -207,62 +195,3 @@ app.post('/addattribute/:id', function(req, res) {
         })
     })
 })
-
-/*
-// Add  attribute Route
-app.post('/addattribute/:id', function(req, res) {
-
-    //const { id } = req.params //we can also use this code
-    const id = req.params.id;
-    let result = 0; //Total Material
-    var attributename = req.body.material_id; //Roof Slab
-    var attributeinfo = req.body.squareINFII; //Area
-    var attributematerialtype = req.body.Material_Type; //Material Type
-
-    if (attributename == "Roof") {
-        result = attributeinfo * 100
-    };
-    if (attributename == "Slab") {
-        result = attributeinfo * 200
-    };
-    if (attributename == "Exterior Wall") {
-        result = attributeinfo * 300
-    };
-    if (attributename == "Interior Wall") {
-        result = attributeinfo * 400
-    };
-    if (attributename == "Foundation") {
-        result = attributeinfo * 500
-    };
-
-
-    var attributedetails = { "name": attributename, "info": attributeinfo, "materialtype": attributematerialtype, "result": result };
-
-    // first find the building with this id, and then Add data details to this building collection
-    db.collection('buildingCollection').find({ _id: ObjectId(id) }).toArray(function(err, result) {
-        if (err) throw err;
-
-        var attribute = [];
-        // accumulate the attribute
-        if (result[0].attribute) {
-            attribute = result[0].attribute
-        }
-        //console.log(attribute);
-
-        attribute.push(attributedetails);
-
-        var newattribut = { $set: { "attribute": attribute } };
-
-        //use db.collection again,to update the attribute of this building with this id
-        db.collection('buildingCollection').updateOne({ _id: ObjectId(id) }, newattribut, { upsert: true }, function(err, result) {
-            if (err) throw err;
-
-            res.redirect(`/attributelistdata/${id}`);
-
-        });
-
-        //release the lock
-        db.collection('checkversion').update({ name: "checkthelock" }, { $set: { status: 0 } });
-    })
-});
-*/

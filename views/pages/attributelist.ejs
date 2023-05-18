@@ -4,14 +4,16 @@
 <head>
     <%- include('../partials/head') %>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/script/exportPDF.js" type="module"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>>
 </head>
 
 <body>
     <header>
         <%- include('../partials/header') %>
     </header>
-
-    <main class="flex-space">
+    <button id="export-pdf" type="button">Export PDF</button>
+    <main class="flex-space" id="page-flex">
 
         <h2>The scraped building constructions</h2>
         <table>
@@ -24,9 +26,6 @@
             <th>
                 <h3>Area</h3>
             </th>
-            <!--<th>
-                <h3>total Materials</h3>
-            </th>-->
             <% buildingdetails.attribute.forEach(function(item)		
 			//why do we use buildingdetails.attribute, because of hierarchy: building->buildingcollection->buildingdetails: id, adress, attribute->attribute->name, info, result
 				
@@ -39,11 +38,6 @@
                                 <%= item.Category %>
                             </p>
                         </td>
-                        <!--<td>
-                            <p>
-                                <%= item.info %>
-                            </p>
-                        </td>-->
                         <td>
                             <p>
                                 <%= item.Type %>
@@ -87,19 +81,41 @@
                     <% }); 
                 %>
                 </table>
-        <h4>show pie chart of this project hier</h4>
-        <canvas id="myChart"></canvas>
+        <br>
+        <h2 style="margin-top: 180px;">Pie Chart</h2>
+        <div style="height: 900px; width: 100%; display: flex; justify-content: center">
+            <div style="width: 42vw">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+        
         <script>
-            const ctx = document.getElementById('myChart')
+            const ctx = document.getElementById('myChart').getContext('2d')
             let materialDetails = '<%- JSON.stringify(materialDetails) %>'
             materialDetails = JSON.parse(materialDetails)
             new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: Object.keys(materialDetails),
-                datasets: [{data: Object.values(materialDetails)}]
-            }
-            });
+                type: 'pie',
+                data: {
+                    labels: Object.keys(materialDetails),
+                    datasets: [{data: Object.values(materialDetails)}]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                boxWidth: 50,
+                                boxHeight: 50
+                            }
+                        }
+                    },
+                    layout: {
+                        autoPadding: false
+                    }
+                }
+            })
         </script>
     </main>    
 </body>

@@ -100,6 +100,7 @@ input[type=text] {
   outline: none;
   color: #000000;
 }
+
 input[type=text]:focus {
   color: #000000;
 }
@@ -167,14 +168,17 @@ table th, table td {
   padding: 5px 10px;
   border-collapse: collapse;
 }
+
 table th {
   background: var(--main-color);
   color: #fff;
   font-size: 14px;
 }
+
 table td {
   padding: 15px 10px;
 }
+
 table p {
   text-align: center;
 }

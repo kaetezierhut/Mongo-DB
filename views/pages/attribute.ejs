@@ -13,50 +13,14 @@
 
     <div class="grid">
         <div class="buildingmanager">
-                <!-- <h4>It is better not to use the following Select element to determinate the category, you need to create a function to fill the category, area and material automatically in Input Box according to the properties of the IFC object</h4>
-                <form action="/addattribute/<%= buildingdetails[0]._id %>" method="post">
-                    this Input Box need your help！There is no function in server.js for this Input Box
-                    <input id="inputCitygmlCategory" type="text" name="Category" placeholder="Category of selected element" >
-
-                    <select name="material_id" size="6"> "name" is be used in req.body.name, name is the value of Roof... 
-                        <option value="">--Please choose an option--</option>
-                        <option value="Roof">Roof</option>
-			            <option value="Slab">Slab</option>
-                        <option value="Exterior Wall">Exterior Wall</option>
-                        <option value="Interior Wall">Interior Wall</option>
-                        <option value="Foundation">Foundation</option>
-			        </select>
-
-
-
-                    <input id="inputCitygmlArea" type="text" name="squareINFII" placeholder="Area of selected element" > "squareINFII" is be used in req.body.squareINFII
-                    <input id="inputCitygmlMaterial" type="text" name="Material_Type" placeholder="Material of selected element" > "squareINFII" is be used in req.body.squareINFII
-                    <button type="submit" value="Add">Add Structure</button>
-                    you need to create a picking-function for this button
-                </form>-->
             <h4>Click this button to automatically pick all Area and Material from IFC</h4>
             <button id="pickAll" type="button">Pick All</button>
         </div>
 
         <div>
-
-            <!-- we can also use the xeokit viewer to show the building model. It is not difficult to capture the area and material of the selected element from xoekit viewer.
-            try your best to do it. If you are unable to achieve it, you can go to the exercise supervisor for help. the tutor has the code for this part.
-            -->
-
             <iframe id="iframe" src="/embedDemo/xeokit-bim-viewer-master/app/index.html?projectId=Schependomlaan" style="height:500%;width:100%;"></iframe>
-            
-
-
-            <!--this speckle is running in cloud, -->
-         <!--<iframe id="iframe" src="https://speckle.xyz/streams/cfef95594d/commits/daafca7ecc" style="height:100%;width:100%;"></iframe>-->
         </div>
-
-
     </div>
-
-
-
 </body>
 
 </html>
