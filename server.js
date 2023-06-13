@@ -195,3 +195,41 @@ app.post('/addattribute/:id', function(req, res) {
         })
     })
 })
+
+app.post('/addattribute_single/:id', function(req, res) {
+    const id = req.params.id
+    const scrapeData = req.body
+
+    for (let data of scrapeData){
+        if(data["Category"] == "Floors"){
+            if(data["Type"].includes("Boden")){
+                data["Area"] = data["Area"] * 200
+            }
+            else{
+                data["Area"] = data["Area"] * 500
+            }  
+        }
+        if(data["Category"] == "Walls"){
+            if (data["Type"].includes("Natur")){
+                data["Area"] = data["Area"] * 300
+            }
+            else{
+                data["Area"] = data["Area"] * 400
+            }
+        }
+        if(data["Category"] == "Roofs"){
+            data["Area"] = data["Area"] * 100
+        }
+    }
+    db.collection('buildingCollection').find({ _id: ObjectId(id) }).toArray(function(err, result) {
+        if (err) throw err;
+
+        const newattribut = {$set: {"attribute": scrapeData}};
+
+        //use db.collection again,to update the attribute of this building with this id
+        db.collection('buildingCollection').updateOne({ _id: ObjectId(id)}, newattribut, {upsert: true}, function(err, result) {
+            if (err) throw err;
+            res.redirect(`/attributelistdata/${id}`);
+        })
+    })
+})

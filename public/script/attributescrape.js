@@ -1,5 +1,5 @@
 async function pickAll() {
-    const iframe = document.getElementById("iframe")
+    const iframe = document.getElementById("iframeModel")
     const iframeDoc = iframe.contentDocument || iframe.contentWindow.document
     iframeDoc.getElementsByClassName("xeokit-i18n explorer_toggle_label xeokit-btn fas fa-2x fa-sitemap")[0].click()
     const myExplorer = iframeDoc.getElementById("myExplorer")

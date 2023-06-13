@@ -5,7 +5,8 @@
     <%- include('../partials/head') %>
     <script src="/script/attributescrape.js" type="module"></script>
 </head>
-
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+    crossorigin="anonymous"></script>
 <body>
     <header>
         <%- include('../partials/header') %>
@@ -15,12 +16,111 @@
         <div class="buildingmanager">
             <h4>Click this button to automatically pick all Area and Material from IFC</h4>
             <button id="pickAll" type="button">Pick All</button>
+            <form action="/addattribute_single/<%= buildingdetails[0]._id %>" method="post">
+
+                <input id="inputCitygmlArea" type="text" name="squareINFII" placeholder="Area of selected element">
+
+                <input id="inputCitygmlkate" type="text" name="squareINFII11" placeholder="Area of selected element">
+
+                <!--"squareINFII" is be used in req.body.squareINFII -->
+                <input id="inputCitygmlMaterial" type="text" name="Material_Type"
+                    placeholder="Material of selected element"> <!--"squareINFII" is be used in req.body.squareINFII -->
+                
+                <button type ="button" value="Add" onclick="PickSelected()" >Pick Selected</button>
+                <input id ="inputStructure" type = text name ="selected Elements" placeholder = "Array"
+                required minlength="4" maxlength="8" size ="10">
+                
+
+            </form>
+
+            <button type="button" value="Add" onClick="findTheElement()">Capture</button>
+            <button type="button" value="Add" onclick="AddStructure()">Add Structure</button>
         </div>
 
         <div>
-            <iframe id="iframe" src="/embedDemo/xeokit-bim-viewer-master/app/index.html?projectId=Schependomlaan" style="height:500%;width:100%;"></iframe>
+            <iframe id="iframeModel" src="/embedDemo/xeokit-bim-viewer-master/app/index.html?projectId=Schependomlaan" style="height:1000px;width:100%;"></iframe>
         </div>
     </div>
 </body>
+<script>
+    var structure = []
+    var areaValue
+    var areaValue3
+    var refValue
+    
+    function findTheElement() {
+        var iframe = $("#iframeModel")
+        var iframeDoc = iframe.contents()
+        console.log(iframeDoc.find('p'))
+        console.log(iframeDoc)
+
+        var elementWithText = iframeDoc.find('p').filter(function () {
+            return $(this).text().trim() === 'Dimensions';
+        });
+
+        elementWithText.click()
+        var areaElement = elementWithText.parent().find('td').filter(function () {
+            return $(this).text().trim() === 'Area:';
+        });
+        areaValue = areaElement.parent().find('td').eq(1).text()
+        console.log(areaValue)
+        var elementWithText2 = iframeDoc.find('a').filter(function () {
+            return $(this).text().trim() === 'Properties';
+        });
+        var referenceElement2 = elementWithText2.parent().find('td').filter(function () {
+            return $(this).text().trim() === 'Name:';
+        });
+        refValue = referenceElement2.parent().find('td').eq(1).text()
+        
+        var elementWithText3 = iframeDoc.find('p').filter(function () {
+            return $(this).text().trim() === 'Other';
+        });
+
+        elementWithText3.click()
+        var areaElement3 = elementWithText3.parent().find('td').filter(function () {
+            return $(this).text().trim() === 'Category:';
+        });
+        areaValue3 = areaElement3.parent().find('td').eq(1).text()
+
+        //inputCitygmlMaterial
+        if (areaValue && refValue) {
+            $('#inputCitygmlArea').val(areaValue)
+            $('#inputCitygmlkate').val(areaValue3)
+            $('#inputCitygmlMaterial').val(refValue.split(':')[1])
+        }
+
+    }
+
+    function AddStructure(){
+        console.log("Add structure")
+        console.log(areaValue)
+        console.log(areaValue3)
+        console.log(refValue.split(':'[1]))
+        var areaStructure =$('#inputCitygmlArea').val()
+        var areaKate= $('#inputCitygmlkate').val()
+        var areaMaterial=  $('#inputCitygmlMaterial').val()
+        const structureElement = {Area:areaStructure, Category:areaKate, Type:areaMaterial}
+        structure.push(structureElement)
+        console.log(structure)
+        $('#inputStructure').val(areaMaterial)
+        
+
+    }
+function PickSelected(){
+    console.log("here")
+    const url = window.location.pathname.split("/").at(-1)
+    let http = new XMLHttpRequest()
+    http.open('POST', `http://127.0.0.1:8080/addattribute_single/${url}`, true);
+    http.setRequestHeader("Content-Type", "application/json")
+    console.log("send" + structure)
+    http.send(JSON.stringify(structure));
+    http.onreadystatechange = () => {
+        if (http.readyState === 4) {
+            window.location.href = `http://127.0.0.1:8080/attributelistdata/${url}`
+        }
+}}
+
+</script>
+module.exports.structure = structure
 
 </html>
